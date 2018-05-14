@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using UserLookupBackend.Models;
 
 namespace UserLookupBackend.Controllers
 {
@@ -16,10 +18,16 @@ namespace UserLookupBackend.Controllers
 
         //http://localhost:53077/api
 
-        [HttpGet("test")]
-        public IActionResult getTestData()
+        [HttpGet("getuser")]
+        public IActionResult getSingleUser()
         {
-            return Content("Test Value");
+            string id = Request.Query["id"];
+
+            User newUser = context.users.FirstOrDefault(us => us.id == Convert.ToInt32(id));
+            if (newUser == null)
+                return Content("Username not found");
+
+            return Content(JsonConvert.SerializeObject(newUser));
         } 
     }
 }
