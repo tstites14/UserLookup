@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using UserLookupBackend.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace UserLookupBackend.Controllers
 {
 
     [Route("api")]
+    [EnableCors("AllowOrigin")]
     public class UserController : Controller
     {
         public UserContext context;

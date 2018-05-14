@@ -29,6 +29,13 @@ namespace UserLookupBackend
             services.AddDbContext<UserContext>(options =>
             options.UseMySQL(Configuration.GetConnectionString("UserDatabase")));
             services.AddMvc();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                    builder => builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,8 +46,9 @@ namespace UserLookupBackend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            app.UseCors("AllowOrigin");
+            //app.UseDefaultFiles();
+            //app.UseStaticFiles();
             app.UseMvc();
         }
     }
