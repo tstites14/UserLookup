@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Extensions;
 using UserLookupBackend.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -26,7 +27,7 @@ namespace UserLookupBackend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<UserContext>(options =>
-            options.UseMySQL(Configuration["ConnectionString"]));
+            options.UseMySQL(Configuration.GetConnectionString("UserDatabase")));
             services.AddMvc();
         }
 
